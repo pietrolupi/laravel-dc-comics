@@ -24,14 +24,14 @@
               <td>{{$comic->type}}</td>
               <td>
                 <a href="{{route('comics.show', $comic)}}" class="btn btn-primary">SHOW</a>
-                <a href="{{route('comics.show', $comic)}}" class="btn btn-primary">SHOW</a>
+                <a href="{{route('comics.edit', $comic)}}" class="btn btn-warning">EDIT</a>
               </td>
             </tr>
             @endforeach
 
         </tbody>
       </table>
-      
+
       {{$comics->links()}}
 
 @endsection
