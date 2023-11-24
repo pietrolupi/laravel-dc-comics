@@ -14,7 +14,9 @@ class ComicController extends Controller
      */
     public function index()
     {
-        $comics = Comic::all();
+        /* $comics = Comic::all(); */
+        /* $comics = Comic::orderBy('id', 'desc')->get(); */
+        $comics = Comic::orderBy('id', 'desc')->paginate(5);
 
         return view('comics.index',compact('comics'));
     }
@@ -37,7 +39,15 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $form_data = $request->all();
+
+        $new_comic = new Comic();
+
+        $form_data['slug'] = Comic::generateSlug($form_data['title']);
+        $new_comic->fill($form_data);
+        $new_comic->save();
+
+        return redirect()->route('comics.show', $new_comic);
     }
 
     /**
@@ -46,9 +56,9 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Comic $comic)
     {
-        $comic = Comic::find($id);
+        /* $comic = Comic::find($id); */
 
         return view('comics.show', compact('comic'));
     }
